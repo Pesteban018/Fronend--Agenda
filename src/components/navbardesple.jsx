@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { HiOutlineHome, HiOutlineUser, HiOutlineDocument, HiOutlineEye } from 'react-icons/hi';
@@ -13,6 +13,12 @@ function Navbar() {
   const toggleNavVisibility = () => {
     setIsNavVisible((prevVisibility) => !prevVisibility);
   };
+
+  useEffect(()=>{
+console.log(user);
+
+  },[user])
+
 
   return (
     <>
@@ -82,7 +88,7 @@ function Navbar() {
   <ul> 
     <li className="flex items-center justify-end">
       <h1 className="text-black">{` ${user.username}`}</h1>
-      <img src="ruta-de-la-imagen.jpg" alt="Usuario" className="w-6 h-6 rounded-full ml-2" />
+      <img src={user.image} alt="Usuario" className="w-6 h-6 rounded-full ml-2" />
     </li>
   </ul>
 </div>

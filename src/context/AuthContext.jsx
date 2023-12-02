@@ -3,6 +3,7 @@ import {
   registerRequest,
   loginRequest,
   verityTokenRequet,
+  updateUser,
 } from "../api/auth.js";
 import Cookies from "js-cookie";
 
@@ -66,6 +67,20 @@ const logout = () => {
   }, [errors]);
 
 
+  const UpdateUser = async (user) =>{
+console.log(user); setUser(user)
+ try {
+      const res = await updateUser(user);
+
+
+      
+    } catch (error) {
+ 
+      setErrors(error.response.data);
+    }
+
+    
+  }
 
 
   useEffect(() => {
@@ -88,6 +103,7 @@ const logout = () => {
 
           setIsAuthenticated(true);
           setUser(res.data);
+          console.log(res.data);
           setLoading(false);
         } catch (error) {
           setIsAuthenticated(false);
@@ -110,6 +126,7 @@ const logout = () => {
         isAuthenticated,
         errors,
         setUser,
+        UpdateUser,
       }}
     >
       {children}

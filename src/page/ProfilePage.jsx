@@ -1,28 +1,54 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 
+const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dssfhet6d/image/upload'
+const CLOUDINARY_UPLOAD_PRESET = 'rewjvfk6'
 function ProfilePage() {
-  const { user, updateUserProfile, changePassword } = useContext(AuthContext);
+
+  const { user, setUser, changePassword, UpdateUser } = useContext(AuthContext);
   const [newPassword, setNewPassword] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
-  const [image, setImage] = useState(null);
+
   const [isNavVisible, setIsNavVisible] = useState(true);
   const [profileLeft, setProfileLeft] = useState(72);
+
 
   const handlePasswordChange = () => {
 
     changePassword(currentPassword, newPassword);
   };
 
-  const handleImageChange = () => {
+  const handleImageChange = (img) => {
 
-    updateUserProfile({ ...user, image });
+    UpdateUser({ ...user, image : img })
   };
 
+
+  
   const toggleNavVisibility = () => {
     setIsNavVisible((prevVisibility) => !prevVisibility);
     setProfileLeft((prevLeft) => prevLeft + (prevVisibility ? 16 : -16));
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const formData = new FormData()
+    formData.append('file', e.target.files[0])
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+    const res = await fetch(CLOUDINARY_URL, {
+        method: 'POST',
+        body: formData
+    })
+
+    const file = await res.json()
+
+    const imgURL = file.secure_url
+  
+
+    handleImageChange(imgURL)
+  }
+
+  
 
   return (
     <div
@@ -75,7 +101,7 @@ function ProfilePage() {
         <input
           type="file"
           accept="image/*"
-          onChange={({ target }) => setImage(target.files[0])}
+          onChange={handleSubmit}
           className="mb-2"
         />
        <button
