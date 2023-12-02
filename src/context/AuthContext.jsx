@@ -109,6 +109,7 @@ const logout = () => {
         user,
         isAuthenticated,
         errors,
+        setUser,
       }}
     >
       {children}
