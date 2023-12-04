@@ -5,10 +5,19 @@ import { HiOutlineHome, HiOutlineUser, HiOutlineDocument, HiOutlineEye } from 'r
 import { TiThMenu, TiThMenuOutline } from 'react-icons/ti';
 import { IoMdExit } from 'react-icons/io';
 import { Tooltip } from 'react-tooltip';
-import ProfilePage from "../page/ProfilePage";
+import { useLocation } from 'react-router-dom';
 function Navbar() {
   const { logout, user } = useAuth();
   const [isNavVisible, setIsNavVisible] = useState(true);
+  const location = useLocation();
+
+  // Lista de rutas donde quieres mostrar la sección del usuario
+  const allowedRoutes = ['/calendario', '/card']; // Agrega las rutas que desees
+
+  // Verifica si la ruta actual está en la lista permitida
+  const shouldShowUserSection = allowedRoutes.includes(location.pathname);
+
+
 
   const toggleNavVisibility = () => {
     setIsNavVisible((prevVisibility) => !prevVisibility);
@@ -84,16 +93,16 @@ console.log(user);
         </ul>
       </nav>
 
-      <div className={`bg-white fixed top-0 right-0 left-0 transition-all duration-300 ml-${isNavVisible ? '64' : '16'} text-black h-10 items-center p-2`}>
-  <ul> 
-    <li className="flex items-center justify-end">
-      <h1 className="text-black">{` ${user.username}`}</h1>
-      <img src={user.image} alt="Usuario" className="w-6 h-6 rounded-full ml-2" />
-    </li>
-  </ul>
-</div>
-
-
+      {shouldShowUserSection && (
+        <div className={`bg-white fixed top-0 right-0 left-0 transition-all duration-300 ml-${isNavVisible ? '64' : '16'} text-black h-10 items-center p-2`}>
+          <ul> 
+            <li className="flex items-center justify-end">
+              <h1 className="text-black">{` ${user.username}`}</h1>
+              <img src={user.image} alt="Usuario" className="w-[32px] h-[32px] rounded-full ml-2" />
+            </li>
+          </ul>
+        </div>
+      )}
 
 
 <Tooltip

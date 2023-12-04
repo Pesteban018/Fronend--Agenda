@@ -72,6 +72,7 @@ const CalendarComponent = () => {
   const handleSelectEvent = (event) => {
     setSelectedEvent(event);
   };
+  
 
   return (
     <div className=' ml-[2%] mr-10 items-center justify-between absol mt-12'>

@@ -18,12 +18,19 @@ function LoginPage() {
   });
 
   useEffect(() => {
-    if (isAuthenticated) navigate("/calendario");
-  }, [isAuthenticated]);
+    if (isAuthenticated) {
+      // Aquí deberías agregar una verificación adicional para asegurarte de que estás en la página correcta
+      if (window.location.pathname !== "/calendario") {
+        navigate("/calendario");
+      } else {
+        window.location.reload();
+      }
+    }
+  }, [isAuthenticated, navigate]);
 
   return (
     <div className="flex h-[calc(100vh-100px)] w-[calc(170vh-100px)] ml-[25%] items-center justify-center ">
-      <div className=" max-w-sm w-full rounded-xl bg-zinc-200 shadow-2xl  px-8 pt-6 pb-8 mb-4">
+       <div className=" max-w-sm w-full rounded-xl bg-zinc-200 shadow-2xl  px-8 pt-6 pb-8 mb-4">
       
         <div className=" flex items-center justify-center">
 

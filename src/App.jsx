@@ -15,6 +15,7 @@ import HomePage from "./page/HomePage";
 import Card from "./page/card";
 import Contac from "./page/Contac";
 import Navbardesple from "./components/navbardesple";
+import Imgcambio from "./components/imgcambio";
 
 function App() {
   
@@ -86,6 +87,16 @@ function App() {
                       <>
                         <Navbardesple />
                         <ProfilePage />
+                      </>
+                    }
+                  />
+
+<Route
+                    path="/imgcambio"
+                    element={
+                      <>
+                        <Navbardesple />
+                        <Imgcambio />
                       </>
                     }
                   />

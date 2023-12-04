@@ -67,21 +67,16 @@ const logout = () => {
   }, [errors]);
 
 
-  const UpdateUser = async (user) =>{
-console.log(user); setUser(user)
- try {
+  const UpdateUser = async (user) => {
+    console.log(user);
+    try {
       const res = await updateUser(user);
-
-
-      
+      setUser(user);  // Establecer el nuevo estado después de una actualización exitosa
     } catch (error) {
- 
       setErrors(error.response.data);
     }
-
-    
-  }
-
+  };
+  
 
   useEffect(() => {
     async function checkLogin() {
