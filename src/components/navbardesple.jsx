@@ -94,7 +94,7 @@ console.log(user);
       </nav>
 
       {shouldShowUserSection && (
-        <div className={`bg-white fixed top-0 right-0 left-0 transition-all duration-300 ml-${isNavVisible ? '64' : '16'} text-black h-10 items-center p-2`}>
+        <div className={`bg-white h-11 fixed top-0 right-0 left-0 transition-all duration-300 ml-${isNavVisible ? '64' : '16'} text-black h-10 items-center p-2`}>
           <ul> 
             <li className="flex items-center justify-end">
               <h1 className="text-black">{` ${user.username}`}</h1>

@@ -107,7 +107,7 @@ function ProfilePage() {
       console.log('No se ha seleccionado ninguna imagen.');
     }
   };
-  
+
 
 
 
@@ -162,8 +162,11 @@ function ProfilePage() {
         >
           Cambiar Imagen de Perfil
         </button>
+        
+     
         <Link to="/profile">
             <button
+            
               type="submit"
               className="bg-red-500 hover:bg-red-600  text-white px-4 py-2 rounded-md my-2"
             >
