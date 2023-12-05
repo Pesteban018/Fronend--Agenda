@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { TaskProvider } from "./context/TasksContext";
@@ -10,15 +10,23 @@ import ProfilePage from "./page/ProfilePage";
 import Calendario from "./page/Calendario";
 import Home from "./page/Home";
 import ProtectedRouter from "./ProtectedRouter";
-import Navbar from "./components/Navbar";
+
 import HomePage from "./page/HomePage";
 import Card from "./page/card";
 import Contac from "./page/Contac";
 import Navbardesple from "./components/navbardesple";
 import Imgcambio from "./components/imgcambio";
+import { SharedStateProvider } from './context/SharedStateContext ';
+import Compcaledar from "./components/compcalendar";
+import Comprofile from "./components/compprofile";
+
 
 function App() {
-  
+  const [isNavVisible, setIsNavVisible] = useState(false);
+
+  const toggleNavVisibility = () => {
+    setIsNavVisible(!isNavVisible);
+  };
   return (
     <AuthProvider>
       <TaskProvider>
@@ -33,6 +41,7 @@ function App() {
                 <Route path="/contac" element={<Contac />} />
                 </Routes>
                 <main className="ml-64  flex-grow">
+                  <SharedStateProvider>
                 <Routes>
                 <Route element={<ProtectedRouter />}>
                   <Route path="/home" element={<Home />} />
@@ -40,8 +49,9 @@ function App() {
                     path="/calendario"
                     element={
                       <>
-                        <Navbardesple />
-                        <Calendario />
+                      <Navbardesple isNavVisible={isNavVisible} toggleNavVisibility={toggleNavVisibility} />
+  
+                        <Compcaledar isNavVisible={isNavVisible}  />
                       </>
                     }
                   />
@@ -85,8 +95,9 @@ function App() {
                     path="/profile"
                     element={
                       <>
-                        <Navbardesple />
-                        <ProfilePage />
+                         <Navbardesple isNavVisible={isNavVisible} toggleNavVisibility={toggleNavVisibility} />
+  
+                        <Comprofile isNavVisible={isNavVisible}/>
                       </>
                     }
                   />
@@ -102,6 +113,7 @@ function App() {
                   />
                 </Route>
               </Routes>
+              </SharedStateProvider>
             </main>
           </div>
         </BrowserRouter>

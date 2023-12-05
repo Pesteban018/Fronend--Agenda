@@ -107,7 +107,11 @@ function ProfilePage() {
       console.log('No se ha seleccionado ninguna imagen.');
     }
   };
+  const handleSubmit2 = async () => {
 
+      window.location.href = '/imgcambio';
+  
+  };
 
 
 
