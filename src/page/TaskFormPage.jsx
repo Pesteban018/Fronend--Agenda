@@ -86,7 +86,7 @@ function TaskFormPage() {
 
 
   return (
-    <div className="bg-zinc-200 pt-6 pb-8 mb-4 max-w-md top-20 left-[25%] right-[5%] relative rounded-md h-full flex flex-col items-center justify-center w-full shadow-2xl px-10">
+    <div className="bg-white pt-6 pb-8 mb-4 max-w-md top-20 left-[25%] right-[5%] relative rounded-md h-full flex flex-col items-center justify-center w-full shadow-2xl px-10">
      <ToastContainer />
       <form onSubmit={onSubmit} className="w-full mt-3">
         

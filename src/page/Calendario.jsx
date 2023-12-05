@@ -44,10 +44,10 @@ const CalendarComponent = ({ isNavVisible }) => {
   };
 
   return (
-    <div className={`fixed bg-white top-12 ${isNavVisible ? 'right-[0%] left-[26%]' : 'left-[7%] right-0'} transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}>
+    <div className={`fixed bg-white ${isNavVisible ? 'right-[0%] left-[1%] relative' : ' relative left-[-24%] -mr-44'} transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}>
       <div className='ml-[2%] mr-10 w-auto items-center justify-between absol mt-12 bg'>
     
-        <Calendar
+      <Calendar
           localizer={localizer}
           events={events}
           startAccessor="start"
@@ -61,7 +61,6 @@ const CalendarComponent = ({ isNavVisible }) => {
               `${moment(start).format('LT')} - ${moment(end).format('LT')}`,
           }}
         />
-
         {selectedEvent && (
           <Modal
             isOpen={true}

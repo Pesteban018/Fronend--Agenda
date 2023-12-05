@@ -17,8 +17,7 @@ function ProfilePage({ isNavVisible }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const fileInputRef = useRef(null);
-  const [isimgcamioVisible, setIsimgcambioVisible] = useState(false); // Nuevo estado para controlar la visibilidad del calendario
-   
+  const [isimgcamioVisible, setIsimgcambioVisible] = useState(false); 
 
   const [isDragging, setIsDragging] = useState(false);
   const { perfilExtendido } = useSharedState();
@@ -107,7 +106,7 @@ function ProfilePage({ isNavVisible }) {
   };
 
   useEffect(() => {
-    // Si el enlace actual es "/calendario", muestra el calendario al cargar la página
+
     setIsimgcambioVisible(location.pathname === "/imgcambio");
   }, [location.pathname]);
 
@@ -116,7 +115,7 @@ function ProfilePage({ isNavVisible }) {
   };
 
   return (
-    <div className={`fixed bg-white ${isNavVisible ? 'right-[0%] left-[26%] mb-4' : 'left-[7%] right-0'} transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}>
+    <div className={` relative bg-white ${isNavVisible ?  'right-[0%] left-[1%] mb-4 ' : '  left-[-24%] -mr-44'} transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}>
       <div
         className={`p-10 ${isNavVisible ? 'left-64' : 'right-4'} bg-white rounded-lg shadow-md transition-all duration-300 ease-in-out`}
         onDrop={handleDrop}
@@ -125,20 +124,29 @@ function ProfilePage({ isNavVisible }) {
       >
         <div className=" h-52 bg-white relative rounded-lg  mb-96 shadow-md transition-all duration-300">
           <div className="relative mb-4 h-40">
-            <h2 className={`text-2xl fixed mb-2 font-semibold text-center ${isNavVisible ? 'ml-[237px] transition-all duration-300 ease-in-out' : 'ml-[337px] transition-all duration-300 ease-in-out'}`}>Perfil de Usuario</h2>
+            <h2 className={`text-2xl  mb-2 font-semibold text-center ${isNavVisible ? 'ml-[-30px] transition-all duration-300 ease-in-out' : ' transition-all duration-300 ease-in-out'}`}>Perfil de Usuario</h2>
+            <div className={`bg-stone-300 rounded-full p-1 cursor-pointer absolute ml-${isNavVisible ? 'lefth ml-[346px] top-48 transition-all duration-300 ease-in-out mt-[-30px]' : 'lefth ml-[456px] top-48  transition-all duration-300 mt-[-30px]'} `}
+     style={{ zIndex: 9999 }}>
+  <Link to="/imgcambio" onClick={toggleimgcambioVisibility}>
+    <FontAwesomeIcon icon={faPencilAlt} className="bg-stone-300" />
+  </Link>
+</div>
+
             <div
               style={{ borderColor: user.image ? 'your-color-related-to-image ' : '#ccc' }}
-              className={`border-4 border-solid ${isNavVisible ? 'left-[237px] transition-all duration-300 ease-in-out top-9 ' : 'left-[347px]'} top-9 rounded-full overflow-hidden w-[150px] h-[150px] relative transition-all duration-300 ease-in-out`}
+              className={`border-4 border-solid ${isNavVisible ? 'left-[237px] transition-all duration-300 ease-in-out ' : 'left-[347px]'} rounded-full overflow-hidden w-[150px] h-[150px] relative transition-all duration-300 ease-in-out`}
             >
-              <img src={user.image} alt="Usuario" className="w-full h-full object-cover" />
+     
+     <img
+  src={user.image}
+  alt="Usuario"
+  className="w-full h-full object-cover"
+  style={{ objectFit: 'cover' }} 
+
+  
+/>
            
-           
-              <div style={{ borderColor: user.image ? 'your-color-related-to-image' : '#ccc' }} className={`bg-stone-400 rounded-full fixed p-1 cursor-pointer  ml-${isNavVisible ? 'lefth ml-[110px] transition-all duration-300 ease-in-out mt-[-30px] ' : 'lefth ml-[110px] transition-all duration-300 mt-[-30px] '} `}>
-                <Link to="/imgcambio"
-                onClick={toggleimgcambioVisibility}>
-                  <FontAwesomeIcon icon={faPencilAlt} className="text-white"  />
-                </Link>
-             </div>
+            
             </div>
           </div>
 

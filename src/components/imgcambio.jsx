@@ -123,7 +123,7 @@ function ProfilePage({ isNavVisible }) {
     fileInputRef.current.click();
   };
   return (
-    <div className={`fixed bg-white ${isNavVisible ? 'right-[0%] left-[26%]' : 'left-[7%] right-0'} transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}>
+    <div className={`fixed bg-white ${isNavVisible ? 'right-[0%] left-[1%] relative' : 'relative left-[-24%] -mr-44'} transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}>
  
     <div
     className={` p-10 left-${profileLeft} right-4 bg-white rounded-lg shadow-md transition-all duration-300 ease-in-out`}
