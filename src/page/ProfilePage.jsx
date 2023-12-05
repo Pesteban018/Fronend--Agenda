@@ -17,6 +17,8 @@ function ProfilePage({ isNavVisible }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const fileInputRef = useRef(null);
+  const [isimgcamioVisible, setIsimgcambioVisible] = useState(false); // Nuevo estado para controlar la visibilidad del calendario
+   
 
   const [isDragging, setIsDragging] = useState(false);
   const { perfilExtendido } = useSharedState();
@@ -99,6 +101,16 @@ function ProfilePage({ isNavVisible }) {
     }
   };
 
+  const toggleimgcambioVisibility = () => {
+    console.log("Toggling Profile Visibility");
+    setIsProfileVisible(true);
+  };
+
+  useEffect(() => {
+    // Si el enlace actual es "/calendario", muestra el calendario al cargar la página
+    setIsimgcambioVisible(location.pathname === "/imgcambio");
+  }, [location.pathname]);
+
   const handleClick = () => {
     fileInputRef.current.click();
   };
@@ -122,8 +134,9 @@ function ProfilePage({ isNavVisible }) {
            
            
               <div style={{ borderColor: user.image ? 'your-color-related-to-image' : '#ccc' }} className={`bg-stone-400 rounded-full fixed p-1 cursor-pointer  ml-${isNavVisible ? 'lefth ml-[110px] transition-all duration-300 ease-in-out mt-[-30px] ' : 'lefth ml-[110px] transition-all duration-300 mt-[-30px] '} `}>
-                <Link to="/imgcambio">
-                  <FontAwesomeIcon icon={faPencilAlt} className="text-white" onClick={() => { /* Manejar la acción del lápiz */ }} />
+                <Link to="/imgcambio"
+                onClick={toggleimgcambioVisibility}>
+                  <FontAwesomeIcon icon={faPencilAlt} className="text-white"  />
                 </Link>
              </div>
             </div>
@@ -180,7 +193,15 @@ function ProfilePage({ isNavVisible }) {
           </div>
         </div>
       </div>
+      {isimgcamioVisible && (
+        <div className="imgcambio-container">
+          <Imgcambio isNavVisible={isNavVisible} />
+        </div>
+
+        
+      )}
     </div>
+    
   );
 }
 

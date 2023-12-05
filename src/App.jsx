@@ -19,6 +19,7 @@ import Imgcambio from "./components/imgcambio";
 import { SharedStateProvider } from './context/SharedStateContext ';
 import Compcaledar from "./components/compcalendar";
 import Comprofile from "./components/compprofile";
+import Compimgcambio from "./components/compimgcambio";
 
 
 function App() {
@@ -106,8 +107,9 @@ function App() {
                     path="/imgcambio"
                     element={
                       <>
-                        <Navbardesple />
-                        <Imgcambio />
+                         <Navbardesple isNavVisible={isNavVisible} toggleNavVisibility={toggleNavVisibility} />
+  
+                        <Compimgcambio isNavVisible={isNavVisible} />
                       </>
                     }
                   />

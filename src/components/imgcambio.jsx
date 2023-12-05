@@ -1,21 +1,26 @@
 import React, { useContext, useState, useRef } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { Link } from "react-router-dom";
+import { useTasks } from '../context/TasksContext';
+import { useSharedState } from '../context/SharedStateContext ';
+
 
 const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dssfhet6d/image/upload';
 const CLOUDINARY_UPLOAD_PRESET = 'rewjvfk6';
 
-function ProfilePage() {
+function ProfilePage({ isNavVisible }) {
   const { user, setUser, changePassword, UpdateUser } = useContext(AuthContext);
   const [newPassword, setNewPassword] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const fileInputRef = useRef(null);
-  const [isNavVisible, setIsNavVisible] = useState(true);
+ 
   const [profileLeft, setProfileLeft] = useState(72);
   const [isDragging, setIsDragging] = useState(false);
   const [resolutionMessage, setResolutionMessage] = useState('');
+  const [isimgcamioVisible, setIsimgcambioVisible] = useState(false); // Nuevo estado para controlar la visibilidad del calendario
+   
 
   const handlePasswordChange = () => {
     changePassword(currentPassword, newPassword);
@@ -27,10 +32,9 @@ function ProfilePage() {
   };
   
 
-  const toggleNavVisibility = () => {
-    setIsNavVisible((prevVisibility) => !prevVisibility);
-    setProfileLeft((prevLeft) => prevLeft + (prevVisibility ? 16 : -16));
-  };
+
+
+
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -119,9 +123,10 @@ function ProfilePage() {
     fileInputRef.current.click();
   };
   return (
+    <div className={`fixed bg-white ${isNavVisible ? 'right-[0%] left-[26%]' : 'left-[7%] right-0'} transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}>
+ 
     <div
-    className={` p-10 left-${profileLeft} right-4 bg-white rounded-lg shadow-md 
-    } transition-all duration-300 ease-in-out`}
+    className={` p-10 left-${profileLeft} right-4 bg-white rounded-lg shadow-md transition-all duration-300 ease-in-out`}
     onDrop={handleDrop}
     onDragOver={handleDragOver}
     onDragLeave={handleDragLeave} 
@@ -178,7 +183,7 @@ function ProfilePage() {
             </button>
           </Link>
       </div></div>
-    </div>
+    </div> </div>
   );
 }
 

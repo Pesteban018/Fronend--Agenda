@@ -10,12 +10,16 @@
   // Importa CalendarComponent desde la ubicación correcta
   import CalendarComponent from "../page/Calendario";
   import ProfilePage from "../page/ProfilePage";
+  import Imgcambio from '../components/imgcambio';
+
+
 
   function Navbar() {
     const { logout, user } = useAuth();
     const [isNavVisible, setIsNavVisible] = useState(true);
     const [isCalendarVisible, setIsCalendarVisible] = useState(false);
-    const [isProfileVisible, setIsProfileVisible] = useState(false); // Nuevo estado para controlar la visibilidad del calendario
+    const [isProfileVisible, setIsProfileVisible] = useState(false); 
+    const [isimgcamioVisible, setIsimgcambioVisible] = useState(false); // Nuevo estado para controlar la visibilidad del calendario
     const location = useLocation();
     const { toggleAnchoPagina, anchoPagina, togglePerfilExtendido } = useSharedState();
     const [currentPage, setCurrentPage] = useState('');
@@ -37,10 +41,16 @@
       setIsProfileVisible(true);
     };
     
+    const toggleimgcambioVisibility = () => {
+      console.log("Toggling Profile Visibility");
+      setIsProfileVisible(true);
+    };
+
     useEffect(() => {
       // Si el enlace actual es "/calendario", muestra el calendario al cargar la página
       setIsCalendarVisible(location.pathname === "/calendario");
       setIsProfileVisible(location.pathname === "/profile");
+      setIsimgcambioVisible(location.pathname === "/imgcambio");
     }, [location.pathname]);
     
     useEffect(() => {
@@ -147,6 +157,16 @@
         <div className="profile-container">
           <ProfilePage isNavVisible={isNavVisible} />
         </div>
+
+
+      )}
+
+{isimgcamioVisible && (
+        <div className="imgcambio-container">
+          <Imgcambio isNavVisible={isNavVisible} />
+        </div>
+
+        
       )}
       </>
     );
