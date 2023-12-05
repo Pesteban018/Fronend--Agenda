@@ -14,7 +14,13 @@ const localizer = momentLocalizer(moment);
 Modal.setAppElement('#root');
 
 const CalendarComponent = ({ isNavVisible }) => {
-  const { tasks } = useTasks();
+  const { tasks, getTasks } = useTasks();
+
+  useEffect(() => {
+    getTasks(); // Llama a getTasks después de montar el componente
+  }, []);
+
+  console.log(tasks);
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
 
@@ -27,16 +33,21 @@ const CalendarComponent = ({ isNavVisible }) => {
   }, []);
 
   useEffect(() => {
-    const taskEvents = tasks.map((task) => ({
-      id: task._id,
-      title: task.title,
-      description: task.description,
-      start: new Date(task.date),
-      end: new Date(task.date),
-    }));
+    // Verifica si tasks no es undefined antes de intentar mapearlo
+    if (tasks) {
+      const taskEvents = tasks.map((task) => ({
+        id: task._id,
+        title: task.title,
+        description: task.description,
+        start: new Date(task.date),
+        end: new Date(task.date),
+      }));
 
-    setEvents(taskEvents);
-    localStorage.setItem('calendarEvents', JSON.stringify(taskEvents));
+      console.log(taskEvents);
+
+      setEvents(taskEvents);
+      localStorage.setItem('calendarEvents', JSON.stringify(taskEvents));
+    }
   }, [tasks]);
 
   const handleSelectEvent = (event) => {

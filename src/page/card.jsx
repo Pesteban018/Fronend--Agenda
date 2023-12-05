@@ -119,79 +119,79 @@ class App extends Component {
           </Link>
 
           <Container>
-            <Table responsive className="relative ml-auto mr-auto h-44">
-              <thead>
-                <tr>
-                  <th>Titulos</th>
-                  <th>Descripciones</th>
-                  <th>Fechas</th>
-                  <th>Acciónes</th>
-                </tr>
-              </thead>
-              {tasks.length === 0 ? (
-                <div className=" absolute left-60 mt-14">
-                  <h1 className=" mb-2">
-                    NO SE ENCUENTRAN TAREAS AGREGADAS...
-                  </h1>
-                </div>
-              ) : (
-                <tbody>
-                  {tasks.map((elemento) => (
-                    <tr key={elemento._id}>
-                      <td
-                        className={`max-title-length transition-all duration-300 ease-in-out ${
-                          isNavVisible ? "max-w-[100px]" : "max-w-[300px]"
-                        }`}
-                      >
-                        {elemento.title.length > dynamicMaxtitleLength
-                          ? `${elemento.title.substring(
-                              0,
-                              dynamicMaxtitleLength
-                            )}...`
-                          : elemento.title}
-                      </td>
-                      <td
-                        className={`max-description-length transition-all duration-300 ease-in-out ${
-                          isNavVisible ? "max-w-[100px]" : "max-w-[300px]"
-                        }`}
-                      >
-                        {elemento.description.length >
-                        dynamicMaxDescriptionLength
-                          ? `${elemento.description.substring(
-                              0,
-                              dynamicMaxDescriptionLength
-                            )}...`
-                          : elemento.description}
-                      </td>
-                      <td>{new Date(elemento.date).toLocaleDateString()}</td>
+          <Table responsive className="relative ml-auto mr-auto h-44">
+  <thead>
+    <tr>
+      <th>Titulos</th>
+      <th>Descripciones</th>
+      <th>Fechas</th>
+      <th>Acciónes</th>
+    </tr>
+  </thead>
+  <tbody>
+    {tasks.length === 0 ? (
+      <tr>
+        <td colSpan="4" className="text-center">
+          <div className="absolute left-60 mt-14">
+            <h1 className="mb-2">NO SE ENCUENTRAN TAREAS AGREGADAS...</h1>
+          </div>
+        </td>
+      </tr>
+    ) : (
+      tasks.map((elemento) => (
+        <tr key={elemento._id}>
+          <td
+            className={`max-title-length transition-all duration-300 ease-in-out ${
+              isNavVisible ? "max-w-[100px]" : "max-w-[300px]"
+            }`}
+          >
+            {elemento.title.length > dynamicMaxtitleLength
+              ? `${elemento.title.substring(
+                  0,
+                  dynamicMaxtitleLength
+                )}...`
+              : elemento.title}
+          </td>
+          <td
+            className={`max-description-length transition-all duration-300 ease-in-out ${
+              isNavVisible ? "max-w-[100px]" : "max-w-[300px]"
+            }`}
+          >
+            {elemento.description.length >
+            dynamicMaxDescriptionLength
+              ? `${elemento.description.substring(
+                  0,
+                  dynamicMaxDescriptionLength
+                )}...`
+              : elemento.description}
+          </td>
+          <td>{new Date(elemento.date).toLocaleDateString()}</td>
+          <td>
+            <Link
+              to={`/tasks/${elemento._id}`}
+              className="btn btn-primary mr-2"
+            >
+              <CiEdit />
+            </Link>
+            <button
+              className="btn btn-danger mr-2"
+              onClick={() => this.mostrarModalEliminar(elemento)}
+            >
+              <MdDeleteForever />
+            </button>
+            <button
+              className="btn btn-info "
+              onClick={() => this.setState({ selectedEvent: elemento })}
+            >
+              <IoEye />
+            </button>
+          </td>
+        </tr>
+      ))
+    )}
+  </tbody>
+</Table>
 
-                      <td>
-                        <Link
-                          to={`/tasks/${elemento._id}`}
-                          className="btn btn-primary mr-2"
-                        >
-                          <CiEdit />
-                        </Link>
-                        <button
-                          className="btn btn-danger mr-2"
-                          onClick={() => this.mostrarModalEliminar(elemento)}
-                        >
-                          <MdDeleteForever />
-                        </button>
-                        <button
-                          className="btn btn-info "
-                          onClick={() =>
-                            this.setState({ selectedEvent: elemento })
-                          }
-                        >
-                          <IoEye />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              )}
-            </Table>
           </Container>
 
           <Modal isOpen={modalEliminar}>
@@ -204,9 +204,9 @@ class App extends Component {
             <ModalBody>
               <h2 className="whitespace-normal overflow-auto">
                 ¿Estás seguro de que deseas eliminar la tarea con el Nombre:{" "}
-                <h2 className=" font-bold">
-                  {tareaEliminar ? tareaEliminar.title : ""}?
-                </h2>
+                <span className="font-bold">
+                  {tareaEliminar ? tareaEliminar.title : ""}
+                </span>
               </h2>
             </ModalBody>
 
