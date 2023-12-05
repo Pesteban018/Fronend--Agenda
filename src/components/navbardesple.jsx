@@ -11,6 +11,7 @@
   import CalendarComponent from "../page/Calendario";
   import ProfilePage from "../page/ProfilePage";
   import Imgcambio from '../components/imgcambio';
+  import Card from "../page/card";
 
 
 
@@ -19,7 +20,8 @@
     const [isNavVisible, setIsNavVisible] = useState(true);
     const [isCalendarVisible, setIsCalendarVisible] = useState(false);
     const [isProfileVisible, setIsProfileVisible] = useState(false); 
-    const [isimgcamioVisible, setIsimgcambioVisible] = useState(false); // Nuevo estado para controlar la visibilidad del calendario
+    const [isimgcamioVisible, setIsimgcambioVisible] = useState(false);
+    const [istaskVisible, setIstaskVisible] = useState(false);  // Nuevo estado para controlar la visibilidad del calendario
     const location = useLocation();
     const { toggleAnchoPagina, anchoPagina, togglePerfilExtendido } = useSharedState();
     const [currentPage, setCurrentPage] = useState('');
@@ -41,9 +43,10 @@
       setIsProfileVisible(true);
     };
     
-    const toggleimgcambioVisibility = () => {
-      console.log("Toggling Profile Visibility");
-      setIsProfileVisible(true);
+
+    const toggletaskVisibility = () => {
+      console.log("Toggling Task Visibility");
+      setIstaskVisible(true);
     };
 
     useEffect(() => {
@@ -51,6 +54,7 @@
       setIsCalendarVisible(location.pathname === "/calendario");
       setIsProfileVisible(location.pathname === "/profile");
       setIsimgcambioVisible(location.pathname === "/imgcambio");
+      setIstaskVisible(location.pathname === "/card");
     }, [location.pathname]);
     
     useEffect(() => {
@@ -105,6 +109,7 @@
                 to="/card"
                 className="flex items-center space-x-2 hover:bg-gray-700 px-3 py-2 rounded-md transition duration-300"
                 title="Mis tareas"
+                onClick={toggletaskVisibility}
               >
                 <HiOutlineDocument />
                 {isNavVisible && <span className="tooltip-text">Mis tareas</span>}
@@ -164,6 +169,13 @@
 {isimgcamioVisible && (
         <div className="imgcambio-container">
           <Imgcambio isNavVisible={isNavVisible} />
+        </div>
+
+        
+      )}
+      {istaskVisible && (
+        <div className="task-container">
+          <Card isNavVisible={isNavVisible} />
         </div>
 
         

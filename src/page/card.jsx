@@ -37,6 +37,7 @@ class App extends Component {
     },
     tareaEliminar: null,
     selectedEvent: null, 
+    maxDescriptionLength: 30, 
   };
 
   componentDidMount() {
@@ -69,9 +70,11 @@ class App extends Component {
 
   eliminar = () => {
     const { tareaEliminar } = this.state;
-
+    console.log("Deleting task with ID:", tareaEliminar._id);
+  
     deleteTaskRequest(tareaEliminar._id)
       .then(() => {
+        console.log("Task deleted successfully");
         this.setState((prevState) => ({
           tasks: prevState.tasks.filter(
             (task) => task._id !== tareaEliminar._id
@@ -83,17 +86,23 @@ class App extends Component {
         console.error("Error al eliminar tarea:", error);
       });
   };
+  
+  
 
   render() {
-    const { tasks, modalEliminar, tareaEliminar, selectedEvent } = this.state;
+    const { tasks, modalEliminar, tareaEliminar, selectedEvent, maxDescriptionLength } = this.state;
+    const { isNavVisible } = this.props;
+    const dynamicMaxDescriptionLength = isNavVisible ? 10 : maxDescriptionLength;
 
     return (
       <>
+       <div className={`fixed h-max bg-white top-12 ${isNavVisible ? 'right-[0%] left-[26%]' : 'left-[7%] right-0'} transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}>
+     
         <ToastContainer />
-        <Container className={`mt-4 ${this.props.isNavVisible ? "ml-64" : "ml-16"}`}>
+        <Container >
         
             <Link to="/add-task">
-              <Button className="bg-green-500 hover:bg-green-700 flex space-x-2 items-center text-white font-bold rounded mb-3 mt-16">
+              <Button className="bg-green-500 hover:bg-green-700 flex space-x-2 items-center text-white font-bold rounded mb-3 mt-7">
                 <MdAddTask /> <span> Nueva Tarea</span>
               </Button>
             </Link>
@@ -111,8 +120,13 @@ class App extends Component {
                 {tasks.map((elemento) => (
                   <tr key={elemento._id}>
                     <td>{elemento.title.substring(0, 15)}</td>
-                    <td>{elemento.description.substring(0, 20)}...</td>
-                    <td>{new Date(elemento.date).toLocaleDateString()}</td>
+                <td className={`max-description-length transition-all duration-300 ease-in-out ${isNavVisible ? 'max-w-[100px]' : 'max-w-[300px]'}`}>
+                  {elemento.description.length > dynamicMaxDescriptionLength
+                    ? `${elemento.description.substring(0, dynamicMaxDescriptionLength)}...`
+                    : elemento.description}
+                </td>
+                <td>{new Date(elemento.date).toLocaleDateString()}</td>
+           
                     <td>
                       <Link
                         to={`/tasks/${elemento._id}`}
@@ -220,6 +234,7 @@ class App extends Component {
               </div>
             </Modal>
           )}
+           </div>
         </>
       );
     }

@@ -20,6 +20,7 @@ import { SharedStateProvider } from './context/SharedStateContext ';
 import Compcaledar from "./components/compcalendar";
 import Comprofile from "./components/compprofile";
 import Compimgcambio from "./components/compimgcambio";
+import Comptask from "./components/comptask";
 
 
 function App() {
@@ -60,7 +61,8 @@ function App() {
                     path="/tasks"
                     element={
                       <>
-                        <Navbardesple />
+                        <Navbardesple isNavVisible={isNavVisible} toggleNavVisibility={toggleNavVisibility} />
+  
                         <TaskPage />
                       </>
                     }
@@ -69,8 +71,9 @@ function App() {
                     path="/card"
                     element={
                       <>
-                        <Navbardesple />
-                        <Card />
+                         <Navbardesple isNavVisible={isNavVisible} toggleNavVisibility={toggleNavVisibility} />
+  
+                        <Comptask isNavVisible={isNavVisible}/>
                       </>
                     }
                   />
