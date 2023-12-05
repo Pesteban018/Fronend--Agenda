@@ -99,14 +99,17 @@ class App extends Component {
        <div className={`fixed h-max bg-white top-12 ${isNavVisible ? 'right-[0%] left-[26%]' : 'left-[7%] right-0'} transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}>
      
         <ToastContainer />
-        <Container >
+ 
         
             <Link to="/add-task">
-              <Button className="bg-green-500 hover:bg-green-700 flex space-x-2 items-center text-white font-bold rounded mb-3 mt-7">
+              <Button className="bg-green-500 ml-2 hover:bg-green-700 flex space-x-2 items-center text-white font-bold rounded mb-3 mt-7">
                 <MdAddTask /> <span> Nueva Tarea</span>
               </Button>
             </Link>
-            <Table responsive className="relative ml-auto mr-auto">
+
+            <Container>
+         
+            <Table responsive className="relative ml-auto mr-auto h-44">
               <thead>
                 <tr>
                   <th>Titulos</th>
@@ -115,8 +118,14 @@ class App extends Component {
                   <th>Acciónes</th>
                 </tr>
               </thead>
-
+              {tasks.length === 0 ? (
+            <div className=" absolute left-60 mt-14">
+              <h1 className=" mb-2">NO SE ENCUENTRAN TAREAS AGREGADAS...</h1>
+             
+            </div>
+          ) : (
               <tbody>
+                
                 {tasks.map((elemento) => (
                   <tr key={elemento._id}>
                     <td>{elemento.title.substring(0, 15)}</td>
@@ -149,8 +158,8 @@ class App extends Component {
                     </td>
                   </tr>
                 ))}
-              </tbody>
-            </Table>
+              </tbody>)}
+            </Table> 
           </Container>
 
      
