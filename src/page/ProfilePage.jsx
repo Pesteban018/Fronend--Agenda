@@ -5,6 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 
 import { Link } from "react-router-dom";
 import { useSharedState } from "../context/SharedStateContext ";
+import { updateUser } from "../api/auth";
 
 const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dssfhet6d/image/upload";
 const CLOUDINARY_UPLOAD_PRESET = "rewjvfk6";
@@ -21,9 +22,15 @@ function ProfilePage({ isNavVisible }) {
   const [isDragging, setIsDragging] = useState(false);
   const { perfilExtendido } = useSharedState();
   const [profileLeft, setProfileLeft] = useState(72);
+  
 
-  const handlePasswordChange = () => {
-    changePassword(currentPassword, newPassword);
+  const handlePasswordChange = async() => {
+    if(currentPassword!=newPassword){
+      alert("Las contraseñas no coinciden")
+      return
+    }
+    await updateUser({password:newPassword})
+    
   };
 
   const handleImageChange = async (img) => {
@@ -198,7 +205,7 @@ function ProfilePage({ isNavVisible }) {
           <div className="mb-4">
             <h3 className="text-lg font-semibold">Cambiar Contraseña:</h3>
             <label className="block mb-2">
-              Contraseña Actual:
+              Nueva contraseña:
               <input
                 type="password"
                 value={currentPassword}
@@ -207,8 +214,9 @@ function ProfilePage({ isNavVisible }) {
               />
             </label>
             <label className="block mb-2">
-              Nueva Contraseña:
+              Verificar contraseña:
               <input
+                name="password"
                 type="password"
                 value={newPassword}
                 onChange={({ target }) => setNewPassword(target.value)}
