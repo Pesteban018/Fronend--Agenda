@@ -19,18 +19,39 @@ function ProfilePage({ isNavVisible }) {
   const fileInputRef = useRef(null);
   const [isimgcamioVisible, setIsimgcambioVisible] = useState(false);
 
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [currentPasswordError, setCurrentPasswordError] = useState(null);
+  const [newPasswordError, setNewPasswordError] = useState(null);
+  const [confirmPasswordError, setConfirmPasswordError] = useState(null);
+
+
   const [isDragging, setIsDragging] = useState(false);
   const { perfilExtendido } = useSharedState();
   const [profileLeft, setProfileLeft] = useState(72);
   
 
   const handlePasswordChange = async() => {
-    if(currentPassword!=newPassword){
-      alert("Las contraseñas no coinciden")
-      return
+    setCurrentPasswordError(null);
+    setNewPasswordError(null);
+    setConfirmPasswordError(null);
+
+    if (newPassword.length < 8) {
+      setNewPasswordError("La contraseña debe tener al menos 8 caracteres");
+      return;
     }
+
+ if (newPassword === currentPassword) {
+    setNewPasswordError("La nueva contraseña debe ser diferente a la actual");
+    return;
+  }
+
+  if (newPassword !== confirmPassword) {
+    setConfirmPasswordError("Las contraseñas no coinciden");
+    return;
+  }
     await updateUser({password:newPassword})
-    
+    await changePassword(currentPassword, newPassword);
   };
 
   const handleImageChange = async (img) => {
@@ -122,8 +143,7 @@ function ProfilePage({ isNavVisible }) {
   };
 
   return (
-    <div className={`fixed bg-white ${isNavVisible ? 'right-[0%] left-[1%] relative' : ' relative left-[-24%] -mr-[22%]'} transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}>
-    
+    <div className={`fixed bg-white ${isNavVisible ? 'right-[0%] left-[1%] relative' : ' relative left-[-24%] -mr-[23%]'} transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}>
       <div
         className={`p-10 ${
           isNavVisible ? "left-64" : "right-4"
@@ -131,7 +151,7 @@ function ProfilePage({ isNavVisible }) {
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
-      >
+      >   
         <div className=" h-52 bg-white relative rounded-lg  mb-96 shadow-md transition-all duration-300">
           <div className="relative mb-4 h-40">
             <h2
@@ -177,6 +197,7 @@ function ProfilePage({ isNavVisible }) {
             </div>
           </div>
 
+          
           <div className="flex justify-between mt-20">
             <div className="mb-4">
               <h3 className="text-lg font-semibold">Correo Electrónico:</h3>
@@ -197,29 +218,42 @@ function ProfilePage({ isNavVisible }) {
                 className="form-input mt-1 block w-full bg-gray-100 px-2 py-1 rounded"
               />
             </div>
-          </div>
+         
 
-          <div className="mb-4">
+       
+          <div className="mb-4 left-5 relative">
             <h3 className="text-lg font-semibold">Cambiar Contraseña:</h3>
-            <label className="block mb-2">
-              Nueva contraseña:
+            <label className="block mb-2 ">
+              Contraseña Actual:
               <input
                 type="password"
                 value={currentPassword}
                 onChange={({ target }) => setCurrentPassword(target.value)}
-                className="form-input mt-1 block w-full"
+                className="form-input mt-1 block border-2 "
               />
             </label>
+            <div className="text-red-500 text-sm">{currentPasswordError}</div>
             <label className="block mb-2">
-              Verificar contraseña:
+              Nueva Contraseña:
               <input
-                name="password"
                 type="password"
                 value={newPassword}
                 onChange={({ target }) => setNewPassword(target.value)}
-                className="form-input mt-1 block w-full"
+                className="form-input mt-1 block border-2"
               />
             </label>
+            <div className="text-red-500 text-sm">{newPasswordError}</div>
+            <label className="block mb-2">
+              Confirmar Contraseña:
+              <input
+                name="password"
+                type="password"
+                value={confirmPassword}
+                onChange={({ target }) => setConfirmPassword(target.value)}
+                className="form-input mt-1 block border-2"
+              />
+            </label>
+            <div className="text-red-500 text-sm">{confirmPasswordError}</div>
             <button
               onClick={handlePasswordChange}
               className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
@@ -227,8 +261,10 @@ function ProfilePage({ isNavVisible }) {
               Cambiar Contraseña
             </button>
           </div>
-        </div>
+        </div> </div>
       </div>
+    
+    
       {isimgcamioVisible && (
         <div className="imgcambio-container">
           <Imgcambio isNavVisible={isNavVisible} />

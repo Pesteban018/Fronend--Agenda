@@ -119,7 +119,7 @@ const CalendarComponent = ({ isNavVisible }) => {
     setSelectedEvent(event);
   };
   return (
-    <div className={`fixed bg-white ${isNavVisible ? 'right-[0%] left-[1%] relative' : ' relative left-[-24%] -mr-[22%]'} transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}>
+    <div className={`fixed bg-white ${isNavVisible ? 'right-[0%] left-[1%] relative' : ' relative left-[-24%] -mr-[23%]'} transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}>
       <div className='ml-[2%] mr-10 w-auto items-center justify-between absol mt-12 bg'>
         <Calendar
           localizer={localizer}
@@ -138,17 +138,7 @@ const CalendarComponent = ({ isNavVisible }) => {
           }}
           messages={messages}  // Agregar los mensajes personalizados aquí
         />
-        {selectedEvent && (
-          <Modal
-            isOpen={true}
-            onRequestClose={() => setSelectedEvent(null)}
-            contentLabel="Detalles del Evento"
-            className='ml-[40%] bg-white p-8 rounded shadow-md max-w-md mx-auto overflow-auto'
-            overlayClassName='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center'
-          >
-            {/* Contenido del modal */}
-          </Modal>
-        )}
+   
       </div>
     </div>
   );

@@ -105,7 +105,7 @@ class App extends Component {
 
     return (
       <>
-         <div className={`fixed bg-white ${isNavVisible ? 'right-[0%] left-[1%] relative top-[50px]' : ' relative left-[-24%] -mr-[22%] top-[50px]'} transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}>
+         <div className={`fixed bg-white ${isNavVisible ? 'right-[0%] left-[1%] relative top-[50px]' : ' relative left-[-24%] -mr-[23%] top-[50px]'} transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}>
     
           <ToastContainer />
           <div className=" rbc-toolbar"></div>
