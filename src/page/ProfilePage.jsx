@@ -2,6 +2,8 @@ import React, { useContext, useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../context/AuthContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { Link } from "react-router-dom";
 import { useSharedState } from "../context/SharedStateContext ";
@@ -19,45 +21,55 @@ function ProfilePage({ isNavVisible }) {
   const fileInputRef = useRef(null);
   const [isimgcamioVisible, setIsimgcambioVisible] = useState(false);
 
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  const [currentPasswordError, setCurrentPasswordError] = useState(null);
-  const [newPasswordError, setNewPasswordError] = useState(null);
-  const [confirmPasswordError, setConfirmPasswordError] = useState(null);
-
-
   const [isDragging, setIsDragging] = useState(false);
   const { perfilExtendido } = useSharedState();
   const [profileLeft, setProfileLeft] = useState(72);
-  
 
-  const handlePasswordChange = async() => {
-    setCurrentPasswordError(null);
-    setNewPasswordError(null);
-    setConfirmPasswordError(null);
+  const handlePasswordChange = async () => {
+    try {
+   
+      if (!currentPassword || !newPassword) {
+        toast.error("Completa los campos de contraseña antes de cambiarla");
+        return;
+      }
 
-    if (newPassword.length < 8) {
-      setNewPasswordError("La contraseña debe tener al menos 8 caracteres");
-      return;
+      if (currentPassword !== newPassword) {
+        toast.error("Las contraseñas no coinciden");
+        return;
+      }
+
+      if (newPassword.length < 8) {
+        toast.error("La nueva contraseña debe tener al menos 8 caracteres");
+        return;
+      }
+
+      await updateUser({ password: newPassword });
+
+      toast.success("Contraseña cambiada exitosamente");
+    } catch (error) {
+      console.error("Error al cambiar la contraseña:", error);
+
+      if (error.response && error.response.status === 400) {
+        toast.error("Error de validación del servidor");
+      } else {
+        toast.error("Error al cambiar la contraseña");
+      }
     }
-
- if (newPassword === currentPassword) {
-    setNewPasswordError("La nueva contraseña debe ser diferente a la actual");
-    return;
-  }
-
-  if (newPassword !== confirmPassword) {
-    setConfirmPasswordError("Las contraseñas no coinciden");
-    return;
-  }
-    await updateUser({password:newPassword})
-    await changePassword(currentPassword, newPassword);
   };
-
   const handleImageChange = async (img) => {
     console.log("Updating user image:", img);
-    await UpdateUser({ ...user, image: img });
+    try {
+      const updatedUser = { ...user, image: img };
+      await UpdateUser(updatedUser);
+      setUser(updatedUser);  // Actualiza el estado después de una actualización exitosa
+      toast.success("Imagen de perfil cambiada exitosamente");
+    } catch (error) {
+      console.error("Error al cambiar la imagen de perfil:", error);
+      toast.error("Error al cambiar la imagen de perfil");
+    }
   };
+  
+  
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -143,7 +155,15 @@ function ProfilePage({ isNavVisible }) {
   };
 
   return (
-    <div className={`fixed bg-white ${isNavVisible ? 'right-[0%] left-[1%] relative' : ' relative left-[-24%] -mr-[23%]'} transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}>
+    <div
+      className={`fixed bg-white ${
+        isNavVisible
+          ? "right-[0%] left-[1%] relative"
+          : " relative left-[-20%] -mr-[23%]"
+      } transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}
+    >
+      <ToastContainer style={{ pointerEvents: "none" }} autoClose={2000} />
+
       <div
         className={`p-10 ${
           isNavVisible ? "left-64" : "right-4"
@@ -151,31 +171,30 @@ function ProfilePage({ isNavVisible }) {
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
-      >   
+      >
         <div className=" h-52 bg-white relative rounded-lg  mb-96 shadow-md transition-all duration-300">
           <div className="relative mb-4 h-40">
             <h2
               className={`text-2xl  mb-2 font-semibold text-center ${
                 isNavVisible
-                  ? "ml-[-30px] transition-all duration-300 ease-in-out"
-                  : " transition-all duration-300 ease-in-out"
+                  ? "ml-[-200px] transition-all duration-300 ease-in-out"
+                  : " mr-[18%] transition-all duration-300 ease-in-out"
               }`}
             >
               Perfil de Usuario
             </h2>
-            <div
-              className={`bg-stone-300 rounded-full p-1 cursor-pointer absolute ml-${
-                isNavVisible
-                  ? "lefth ml-[346px] top-48 transition-all duration-300 ease-in-out mt-[-30px]"
-                  : "lefth ml-[456px] top-48  transition-all duration-300 mt-[-30px]"
-              } `}
-              style={{ zIndex: 9999 }}
-            >
-              <Link to="/imgcambio" onClick={toggleimgcambioVisibility}>
+            <Link to="/imgcambio" onClick={toggleimgcambioVisibility}>
+              <div
+                className={`bg-stone-300 rounded-full p-1 cursor-pointer absolute ml-${
+                  isNavVisible
+                    ? "lefth ml-[346px] top-48 transition-all duration-300 ease-in-out mt-[-30px]"
+                    : "lefth ml-[456px] top-48  transition-all duration-300 mt-[-30px]"
+                } `}
+                style={{ zIndex: 9999 }}
+              >
                 <FontAwesomeIcon icon={faPencilAlt} className="bg-stone-300" />
-              </Link>
-            </div>
-
+              </div>
+            </Link>
             <div
               style={{
                 borderColor: user.image
@@ -196,75 +215,108 @@ function ProfilePage({ isNavVisible }) {
               />
             </div>
           </div>
+          <div className="flex">
+            <div className="grid grid-cols-2 gap-3 w-96 mt-14">
+              <div className="mb-4">
+                <h3 className="text-lg font-semibold">Correo Electrónico:</h3>
+                <input
+                  type="text"
+                  value={user.email}
+                  disabled
+                  className="form-input mt-1 block w-full bg-gray-100 px-2 py-1 rounded"
+                />
+              </div>
 
-          
-          <div className="flex justify-between mt-20">
-            <div className="mb-4">
-              <h3 className="text-lg font-semibold">Correo Electrónico:</h3>
-              <input
-                type="text"
-                value={user.email}
-                disabled
-                className="form-input mt-1 block w-full bg-gray-100 px-2 py-1 rounded"
-              />
+              <div className="mb-4">
+                <h3 className="text-lg font-semibold">Usuario:</h3>
+                <input
+                  type="text"
+                  value={user.username}
+                  disabled
+                  className="form-input mt-1 block w-full bg-gray-100 px-2 py-1 rounded"
+                />
+              </div>
+
+              <div className="mb-4">
+                <h3 className="text-lg font-semibold">Nombre:</h3>
+                <input
+                  type="text"
+                  value={user.name}
+                  disabled
+                  className="form-input mt-1 block w-full bg-gray-100 px-2 py-1 rounded"
+                />
+              </div>
+
+              <div className="mb-4">
+                <h3 className="text-lg font-semibold">Apellidos:</h3>
+                <input
+                  type="text"
+                  value={user.firstname}
+                  disabled
+                  className="form-input mt-1 block w-full bg-gray-100 px-2 py-1 rounded"
+                />
+              </div>
             </div>
+            <div className="grid grid-cols-2 gap-3 w-96 mt-14 ml-14 ">
+              <div className="mb-4">
+                <h3 className="text-lg font-semibold">Cambiar Contraseña:</h3>
 
-            <div className="mb-4">
-              <h3 className="text-lg font-semibold">Nombre de Usuario:</h3>
-              <input
-                type="text"
-                value={user.username}
-                disabled
-                className="form-input mt-1 block w-full bg-gray-100 px-2 py-1 rounded"
-              />
+                <label className="block mb-2">
+                  Nueva contraseña:
+                  <input
+                    type="password"
+                    value={currentPassword}
+                    onChange={({ target }) => setCurrentPassword(target.value)}
+                    className="form-input mt-1 block border-2"
+                    required
+                  />
+                </label>
+
+                {currentPassword.length > 0 && currentPassword.length < 8 && (
+                  <div
+                    className={`text-red-500 text-sm mb-2 ${
+                      isNavVisible
+                        ? "transition-all duration-300 ease-in-out"
+                        : "mr-[-100%] transition-all duration-300 ease-in-out"
+                    }${
+                      isNavVisible
+                        ? " transition-all duration-300 ease-in-out"
+                        : ""
+                    }`}
+                  >
+                    La nueva contraseña debe tener al menos 8 caracteres
+                  </div>
+                )}
+
+                <label className="block mb-2">
+                  Verificar contraseña:
+                  <input
+                    name="password"
+                    type="password"
+                    value={newPassword}
+                    onChange={({ target }) => setNewPassword(target.value)}
+                    className="form-input mt-1 block border-2"
+                    required
+                  />
+                </label>
+
+                {newPassword !== currentPassword && (
+                  <div className="text-red-500 text-sm mb-2">
+                    La contraseña no coincide
+                  </div>
+                )}
+
+                <button
+                  onClick={handlePasswordChange}
+                  className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                >
+                  Cambiar Contraseña
+                </button>
+              </div>
             </div>
-         
-
-       
-          <div className="mb-4 left-5 relative">
-            <h3 className="text-lg font-semibold">Cambiar Contraseña:</h3>
-            <label className="block mb-2 ">
-              Contraseña Actual:
-              <input
-                type="password"
-                value={currentPassword}
-                onChange={({ target }) => setCurrentPassword(target.value)}
-                className="form-input mt-1 block border-2 "
-              />
-            </label>
-            <div className="text-red-500 text-sm">{currentPasswordError}</div>
-            <label className="block mb-2">
-              Nueva Contraseña:
-              <input
-                type="password"
-                value={newPassword}
-                onChange={({ target }) => setNewPassword(target.value)}
-                className="form-input mt-1 block border-2"
-              />
-            </label>
-            <div className="text-red-500 text-sm">{newPasswordError}</div>
-            <label className="block mb-2">
-              Confirmar Contraseña:
-              <input
-                name="password"
-                type="password"
-                value={confirmPassword}
-                onChange={({ target }) => setConfirmPassword(target.value)}
-                className="form-input mt-1 block border-2"
-              />
-            </label>
-            <div className="text-red-500 text-sm">{confirmPasswordError}</div>
-            <button
-              onClick={handlePasswordChange}
-              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-            >
-              Cambiar Contraseña
-            </button>
           </div>
-        </div> </div>
+        </div>{" "}
       </div>
-    
-    
       {isimgcamioVisible && (
         <div className="imgcambio-container">
           <Imgcambio isNavVisible={isNavVisible} />

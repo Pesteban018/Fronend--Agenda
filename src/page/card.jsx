@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import notify from "../context/notify";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   getTasksRequest,
-  createTaskRequest,
-  updateTasksRequest,
   deleteTaskRequest,
 } from "../api/tasks";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -23,18 +20,11 @@ import { MdDeleteForever, MdAddTask } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
 import { IoEye } from "react-icons/io5";
 import moment from "moment";
+
 class App extends Component {
   state = {
     tasks: [],
-    modalActualizar: false,
-    modalInsertar: false,
     modalEliminar: false,
-    form: {
-      title: "",
-      description: "",
-      date: "",
-      user: "",
-    },
     tareaEliminar: null,
     selectedEvent: null,
     maxDescriptionLength: 30,
@@ -54,6 +44,7 @@ class App extends Component {
         console.error("Error al obtener datos de tareas:", error);
       });
   };
+  
 
   mostrarModalEliminar = (dato) => {
     this.setState({
@@ -82,11 +73,14 @@ class App extends Component {
           ),
           modalEliminar: false,
         }));
+        toast.success("Tarea eliminada exitosamente");
       })
       .catch((error) => {
         console.error("Error al eliminar tarea:", error);
+        toast.error("Error al eliminar tarea");
       });
   };
+  
 
   render() {
     const {
@@ -107,7 +101,8 @@ class App extends Component {
       <>
          <div className={`fixed bg-white ${isNavVisible ? 'right-[0%] left-[1%] relative top-[50px]' : ' relative left-[-24%] -mr-[23%] top-[50px]'} transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}>
     
-          <ToastContainer />
+         <ToastContainer style={{ pointerEvents: "none" }} autoClose={2000} />
+
           <div className=" rbc-toolbar"></div>
           <Link to="/add-task">
             <Button className="bg-green-500 ml-2 hover:bg-green-700 flex space-x-2 items-center text-white font-bold rounded mb-3 mt-7">
@@ -194,17 +189,17 @@ class App extends Component {
           <Modal isOpen={modalEliminar}>
             <ModalHeader>
               <div>
-                <h3>Eliminar Tarea</h3>
+                <p>Eliminar Tarea</p>
               </div>
             </ModalHeader>
 
             <ModalBody>
-              <h2 className="whitespace-normal overflow-auto">
+              <p className="whitespace-normal overflow-auto">
                 ¿Estás seguro de que deseas eliminar la tarea con el Nombre:{" "}
                 <span className="font-bold">
                   {tareaEliminar ? tareaEliminar.title : ""}
                 </span>
-              </h2>
+              </p>
             </ModalBody>
 
             <ModalFooter>
@@ -225,15 +220,14 @@ class App extends Component {
           {selectedEvent && (
             <Modal
               isOpen={true}
-              onRequestClose={() => this.setState({ selectedEvent: null })}
+
               contentlabel="Detalles del Evento"
               className="ml-[40%] bg-white p-8 rounded shadow-md max-w-md mx-auto overflow-auto"
-              overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-            >
+                >
               <div className="max-w-md" style={{ maxHeight: "80vh" }}>
                 <div style={{ display: "flex", marginBottom: "1rem" }}>
                   <h1 className="text-lg font-bold mb-1 mr-2">Titulo:</h1>
-                  <h2 className="text-lg text-black">{selectedEvent?.title}</h2>
+                  <p className="text-lg text-black">{selectedEvent?.title}</p>
                 </div>
                 <h1
                   className="text-gray-700 mb-1"
@@ -243,29 +237,29 @@ class App extends Component {
                     overflow: "auto",
                   }}
                 >
-                  <h2 className=" text-lg font-bold mb-1 text-black">
+                  <p className=" text-lg font-bold mb-1 text-black">
                     Descripción:
-                  </h2>{" "}
-                  <h2 className="text-lg text-black">
+                  </p>{" "}
+                  <p className="text-lg text-black">
                     {selectedEvent?.description}
-                  </h2>
+                  </p>
                 </h1>
                 <h1 className="text-gray-700 mb-4 mr-2">
                   <div style={{ display: "flex", marginBottom: "1rem" }}>
-                    <h2 className="text-lg font-bold mb-1 text-black">
+                    <p className="text-lg font-bold mb-1 text-black">
                       Fecha:
-                    </h2>
-                    <h2 className="text-lg text-black">
+                    </p>
+                    <p className="text-lg text-black">
                       {moment(selectedEvent?.start).format("LLL")}
-                    </h2>
+                    </p>
                   </div>
                 </h1>
                 <h1 className="text-gray-700 mb-4 mr-2">
                   <div style={{ display: "flex", marginBottom: "1rem" }}>
-                    <h2 className="text-lg font-bold mb-1 text-black">Hora:</h2>
-                    <h2 className="text-lg text-black">
+                    <p className="text-lg font-bold mb-1 text-black">Hora:</p>
+                    <p className="text-lg text-black">
                       {moment(selectedEvent?.start).format("LT")}
-                    </h2>
+                    </p>
                   </div>
                 </h1>
                 <button

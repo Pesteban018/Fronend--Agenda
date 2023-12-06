@@ -21,7 +21,7 @@ function RegisterPage() {
     signup(values);
   });
   return (
-    <div className="flex h-[calc(100vh-100px)] w-[calc(170vh-100px)] ml-[25%]  items-center justify-center ">
+    <div className="flex h-[calc(115vh-100px)] w-[calc(170vh-100px)] ml-[25%]  items-center justify-center ">
       <div className=" max-w-sm w-full rounded-xl bg-zinc-200 shadow-2xl  px-8 pt-6 pb-8 mb-4">
       
        
@@ -39,7 +39,24 @@ function RegisterPage() {
             ))
         }
       <form onSubmit={onSubmit}>
-      <label htmlFor="title">Usuario</label>
+        
+      <label htmlFor="title">Nombre</label>
+        <input
+          type="text"
+          {...register("name", { required: true })}
+          className="w-full px-4 mt-[-1%] py-2 rounded-md my-2 shadow appearance-none border  text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          placeholder="Nombre"
+        />
+        {errors.name && <p className="text-red-500">El nombre es requerido</p>}
+        <label htmlFor="title">Apellidos</label>
+        <input
+          type="text"
+          {...register("firstname", { required: true })}
+          className="w-full px-4 mt-[-1%] py-2 rounded-md my-2 shadow appearance-none border  text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          placeholder="Apellidos"
+        />
+        {errors.firstname && <p className="text-red-500">El apellido es requerido</p>}
+        <label htmlFor="title">Usuario</label>
         <input
           type="text"
           {...register("username", { required: true })}
@@ -47,6 +64,8 @@ function RegisterPage() {
           placeholder="Usuario"
         />
         {errors.username && <p className="text-red-500">El usuario es requerido</p>}
+     
+        
         <label htmlFor="email">Email</label>
         <input
           type="email"

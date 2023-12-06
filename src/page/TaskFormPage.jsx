@@ -59,12 +59,8 @@ function TaskFormPage() {
   const onSubmit = handleSubmit(async (data) => {
     const formattedData = {
       ...data,
-      date: data.date
-        ? dayjs(data.date).toISOString()
-        : dayjs().toISOString(),
-      time: data.time
-        ? dayjs(data.time, "HH:mm").toISOString()
-        : undefined,
+      date: data.date ? dayjs(data.date).toISOString() : dayjs().toISOString(),
+      time: data.time ? dayjs(data.time, "HH:mm").toISOString() : undefined,
     };
 
     try {
@@ -73,23 +69,22 @@ function TaskFormPage() {
         notify("La tarea se editó correctamente", true);
       } else {
         await createTask(formattedData);
-        notify("La tarea se creó correctamente", true); 
+        notify("La tarea se creó correctamente", true);
       }
       navigate("/card");
     } catch (error) {
       console.error("Error:", error);
       const errorMessage =
         "Hubo un error al " + (params.id ? "editar" : "crear") + " la tarea";
-      notify(errorMessage, false); 
+      notify(errorMessage, false);
     }
   });
 
-
   return (
     <div className="bg-white pt-6 pb-8 mb-4 max-w-md top-20 left-[25%] right-[5%] relative rounded-md h-full flex flex-col items-center justify-center w-full shadow-2xl px-10">
-     <ToastContainer />
+  
       <form onSubmit={onSubmit} className="w-full mt-3">
-        
+           <ToastContainer />
         <label htmlFor="title" className=" text-lg">
           Titulo
         </label>
@@ -133,19 +128,18 @@ function TaskFormPage() {
         </div>
         <div className="flex justify-between">
         <button
-  onClick={onSubmit}  
-  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md my-2"
-  type="button"  
->
-  Guardar
-</button>
-          <Link to="/card">
-            <button
-              type="submit"
-              className="bg-red-500 hover:bg-red-600  text-white px-4 py-2 rounded-md my-2"
-            >
-              Cancelar
-            </button>
+      className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md my-2"
+      type="submit"
+    >
+      Guardar
+    </button>
+    <Link to="/card">
+      <button
+        type="button"
+        className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md my-2"
+      >
+        Cancelar
+      </button>
           </Link>
         </div>
       </form>
