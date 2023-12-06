@@ -105,11 +105,8 @@ class App extends Component {
 
     return (
       <>
-        <div
-          className={`relative h-max bg-white top-6 ${
-            isNavVisible ? "right-[0%] left-[1%] " : "left-[-24%] -mr-44"
-          } transition-all duration-300 ease-in-out h-max mr-3 rounded-lg `}
-        >
+         <div className={`fixed bg-white ${isNavVisible ? 'right-[0%] left-[1%] relative top-5' : ' relative left-[-24%] -mr-[22%] top-5'} transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}>
+    
           <ToastContainer />
 
           <Link to="/add-task">

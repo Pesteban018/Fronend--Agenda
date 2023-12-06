@@ -107,7 +107,7 @@ const CalendarComponent = ({ isNavVisible }) => {
     setSelectedEvent(event);
   };
   return (
-    <div className={`fixed bg-white ${isNavVisible ? 'right-[0%] left-[1%] relative' : ' relative left-[-24%] -mr-44'} transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}>
+    <div className={`fixed bg-white ${isNavVisible ? 'right-[0%] left-[1%] relative' : ' relative left-[-24%] -mr-[22%]'} transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}>
       <div className='ml-[2%] mr-10 w-auto items-center justify-between absol mt-12 bg'>
         <Calendar
           localizer={localizer}
