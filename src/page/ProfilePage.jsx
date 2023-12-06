@@ -122,11 +122,8 @@ function ProfilePage({ isNavVisible }) {
   };
 
   return (
-    <div
-      className={` relative bg-white ${
-        isNavVisible ? "right-[0%] left-[1%] mb-4 " : "  left-[-24%] -mr-44"
-      } transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}
-    >
+    <div className={`fixed bg-white ${isNavVisible ? 'right-[0%] left-[1%] relative' : ' relative left-[-24%] -mr-[22%]'} transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}>
+    
       <div
         className={`p-10 ${
           isNavVisible ? "left-64" : "right-4"

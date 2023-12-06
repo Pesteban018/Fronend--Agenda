@@ -66,19 +66,20 @@
     
     return (
       <>
-        <button
-          className={`fixed top-1 p-2 bg-gray-800 left-0 ml-${isNavVisible ? '64' : '16'} text-white transition-all duration-300 ease-in-out z-10`}
-          onClick={toggleNavVisibility}
-          data-tip={isNavVisible ? 'Ocultar menú' : 'Mostrar menú'}
-        >
-          {isNavVisible ? <TiThMenu /> : <TiThMenuOutline />}
-        </button>
+      <button
+  className={`fixed top-1 p-2 bg-gray-800 left-0 ml-${isNavVisible ? '64' : '16 left-[6%]'} text-white transition-all duration-300 ease-in-out z-20`}
+  onClick={toggleNavVisibility}
+  data-tip={isNavVisible ? 'Ocultar menú' : 'Mostrar menú'}
+>
+  {isNavVisible ? <TiThMenu /> : <TiThMenuOutline />}
+</button>
 
-        <nav
-         className={`bg-gray-800 fixed left-0 top-0 flex flex-col text-white transition-all duration-300 ${
-          isNavVisible ? 'w-64 h-[100%]' : 'w-16 h-[100%]'
-        }`}
-        >
+
+<nav
+  className={`bg-gray-800 fixed left-0 top-0 flex flex-col text-white transition-all duration-300 ${
+    isNavVisible ? 'w-64 h-[100%]' : 'w-16 h-[100%]'
+  } z-10`}
+>
           
           <ul className="p-2 flex-1">
           <li className="mb-2">

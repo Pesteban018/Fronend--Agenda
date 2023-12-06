@@ -15,7 +15,7 @@ const localizer = momentLocalizer(moment);
 Modal.setAppElement('#root');
 class CustomToolbar extends Toolbar {
   render() {
-    const { localizer: { messages }, onNavigate, label } = this.props;
+    const { localizer: { messages }, onNavigate, label, onView, view } = this.props;
 
     return (
       <div className="rbc-toolbar">
@@ -31,6 +31,18 @@ class CustomToolbar extends Toolbar {
           </button>
         </span>
         <span className="rbc-toolbar-label">{label}</span>
+        <span className="rbc-toolbar-btn">
+        <div className=" rbc-toolbar"></div>
+          <button
+            type="button"
+            onClick={() => onView('month') /* Puedes cambiar 'month' por la vista que desees */}
+            className={view === 'month' ? 'active' : ''}
+          >
+            {messages.month}
+          </button>
+     
+          {/* Agrega más botones según sea necesario */}
+        </span>
       </div>
     );
   }
@@ -107,7 +119,7 @@ const CalendarComponent = ({ isNavVisible }) => {
     setSelectedEvent(event);
   };
   return (
-    <div className={`fixed bg-white ${isNavVisible ? 'right-[0%] left-[1%] relative' : ' relative left-[-24%] -mr-44'} transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}>
+    <div className={`fixed bg-white ${isNavVisible ? 'right-[0%] left-[1%] relative' : ' relative left-[-24%] -mr-[22%]'} transition-all duration-300 ease-in-out h-max mr-3 rounded-lg`}>
       <div className='ml-[2%] mr-10 w-auto items-center justify-between absol mt-12 bg'>
         <Calendar
           localizer={localizer}
