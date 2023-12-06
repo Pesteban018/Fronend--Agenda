@@ -15,7 +15,7 @@ const localizer = momentLocalizer(moment);
 Modal.setAppElement('#root');
 class CustomToolbar extends Toolbar {
   render() {
-    const { localizer: { messages }, onNavigate, label } = this.props;
+    const { localizer: { messages }, onNavigate, label, onView, view } = this.props;
 
     return (
       <div className="rbc-toolbar">
@@ -31,6 +31,18 @@ class CustomToolbar extends Toolbar {
           </button>
         </span>
         <span className="rbc-toolbar-label">{label}</span>
+        <span className="rbc-toolbar-btn">
+        <div className=" rbc-toolbar"></div>
+          <button
+            type="button"
+            onClick={() => onView('month') /* Puedes cambiar 'month' por la vista que desees */}
+            className={view === 'month' ? 'active' : ''}
+          >
+            {messages.month}
+          </button>
+     
+          {/* Agrega más botones según sea necesario */}
+        </span>
       </div>
     );
   }
