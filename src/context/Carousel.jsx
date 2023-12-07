@@ -16,6 +16,7 @@ const Carousel = () => {
     autoplaySpeed: 3000, 
   };
 
+  
   return (
     <div className="relative">
       <div className="carousel-container  max-w-screen-xl">

@@ -9,7 +9,7 @@ function HomePage() {
   return (
     <div className="w-[calc(164vh-70px)] content-center items-center justify-between">
       <Navbar/>
-      <div>
+      <div className="  bg-zinc-50">
         <title>Agenda</title>
         <link rel="stylesheet" href="./index.css" />
 
@@ -17,19 +17,7 @@ function HomePage() {
         <Carousel/>
 
           <section className="informacion" id="informacion"></section>
-          <div className=" ml-9  mr-9 mt-5">
-            <h1 className="  text-center  text-xl font-semibold">
-              Optimiza la gestión de tus tareas mediante la digitalización de tu
-              agenda y experimenta una forma más eficiente de organizar tus
-              tareas diarias.
-            </h1>
-            <p className="  text-center  text-lg">
-              Nuestro app web de agenda, te proporciona las herramientas
-              necesarias para simplificar la programación, mejorar la
-              productividad y asegurarte de que nunca se te escape ningún
-              compromiso importante.
-            </p>
-          </div>
+          
           <div className="flex mt-9 ml-9  mr-9">
             <div className=" text-center w-[45%]">
               <img
@@ -178,12 +166,12 @@ function HomePage() {
         </div>
         <div className=" mt-4 flex  ml-20  mr-9">
         <div className="">
-          <img className="  h-auto w-[90%] transform transition-transform hover:scale-110" src="\src\img\remplazar.PNG" alt="" />
-          <img className="mt-[30px]  h-auto w-[90%] transform transition-transform hover:scale-110" src="\src\img\remplazar.PNG" alt="" />
+          <img className=" rounded-xl h-auto w-[90%] transform transition-transform hover:scale-110" src="\src\img\img1calendar.PNG" alt="" />
+          <img className="mt-[30px] rounded-xl  h-auto w-[90%] transform transition-transform hover:scale-110" src="\src\img\img2perfil.PNG" alt="" />
         </div>
         <div className="preview2">
-          <img className=" h-auto w-[90%] transform transition-transform hover:scale-110" src="\src\img\remplazar.PNG" alt="" />
-          <img className=" mt-[30px] h-auto w-[90%] transform transition-transform hover:scale-110" src="\src\img\remplazar.PNG" alt="" />
+          <img className=" h-auto rounded-xl w-[90%] transform transition-transform hover:scale-110" src="\src\img\img3task.PNG" alt="" />
+          <img className=" mt-[30px] rounded-xl h-auto w-[90%] transform transition-transform hover:scale-110" src="\src\img\img4agregar.PNG" alt="" />
         </div>
         </div>
 
