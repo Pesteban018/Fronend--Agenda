@@ -110,7 +110,7 @@ function TaskFormPage() {
               Fecha
             </label>
             <input
-              type="date"
+              type="datetime-local"
               {...register("date")}
               className="w-full px-4 mt-[-1%] py-2 rounded-md my-2 shadow appearance-none border  text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
