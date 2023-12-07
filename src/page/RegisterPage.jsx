@@ -22,7 +22,7 @@ function RegisterPage() {
   });
   return (
     <div className="flex h-[calc(115vh-100px)] w-[calc(170vh-100px)] ml-[25%]  items-center justify-center ">
-      <div className=" max-w-sm w-full rounded-xl bg-zinc-200 shadow-2xl  px-8 pt-6 pb-8 mb-4">
+      <div className=" max-w-sm w-full rounded-xl bg-white shadow-2xl  px-8 pt-6 pb-8 mb-4">
       
        
       

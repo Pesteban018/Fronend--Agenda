@@ -1,10 +1,50 @@
+import { useState } from 'react';
+
 import Navbar from "../components/Navbar";
 function Contac() {
+  const [formData, setFormData] = useState({
+    nombre: '',
+    email: '',
+    mensaje: '',
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:3001/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert('Correo electrónico enviado con éxito');
+      } else {
+        alert('Error al enviar el correo electrónico');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
 
-  <div className="max-w-md mx-auto mt-[10%]">
-      <Navbar/>
-  <form className=" bg-zinc-200 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <div className="relative left-[30%] max-w-md mx-auto mt-[10%]">
+    <Navbar />
+    <form
+      className="bg-white shadow-md rounded-xl px-8 pt-6 pb-8 mb-4"
+      onSubmit={handleSubmit}
+    >
     <h2 className="text-2xl font-bold mb-6 text-center">Contacto</h2>
 
     <div className="mb-4">
@@ -53,9 +93,9 @@ function Contac() {
       >
         Enviar
       </button>
-      <div className="">
+      <div className=" relative left-4 ">
 
-<p>Correo Electrónico: Agenda.m.e@gmail.com</p>
+<p className=" font-bold">Correo Electrónico: Agenda.m.e@gmail.com</p>
 
 </div>
     </div>

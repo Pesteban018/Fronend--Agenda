@@ -18,7 +18,7 @@ function Navbar() {
   const { isAuthenticated, logout, user } = useAuth();
   return (
     
-    <nav className=" fixed left-0 z-10 bg-zinc-200 flex justify-between  w-full py-1 px-1 mt-4 top-[-24px] ">
+    <nav className=" fixed left-0 z-10 bg-white flex justify-between  w-full py-1 px-1 mt-4 top-[-24px] ">
       <Link to={isAuthenticated ? "/tasks" : "/"}>
         <img src="\src\img\logo.png" alt="" className="w-70 h-14" />
       </Link>
