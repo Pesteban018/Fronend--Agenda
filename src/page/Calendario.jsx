@@ -130,8 +130,8 @@ const CalendarComponent = ({ isNavVisible }) => {
           onSelecting={() => false}
           style={{ height: '500px' }}
           formats={{
-            eventTimeRangeFormat: ({ start, end }, culture, local) =>
-              `${moment(start).format('LT')} - ${moment(end).format('LT')}`,
+            eventTimeRangeFormat: ({ start, date, end }, culture, local) =>
+              `${moment(start).format('LT')}`,
           }}
           components={{
             toolbar: CustomToolbar,
