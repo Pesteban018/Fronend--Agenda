@@ -250,7 +250,7 @@ class App extends Component {
                       Fecha:
                     </p>
                     <p className="text-lg text-black">
-                      {moment(selectedEvent?.start).format("LLL")}
+                      {new Date(selectedEvent?.date).toLocaleDateString()} 
                     </p>
                   </div>
                 </h1>
@@ -258,7 +258,7 @@ class App extends Component {
                   <div style={{ display: "flex", marginBottom: "1rem" }}>
                     <p className="text-lg font-bold mb-1 text-black">Hora:</p>
                     <p className="text-lg text-black">
-                      {moment(selectedEvent?.start).format("LT")}
+                      {moment(selectedEvent?.date).format("LT")}
                     </p>
                   </div>
                 </h1>
